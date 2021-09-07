@@ -1,40 +1,36 @@
-import { render, screen } from '@testing-library/react';
-import MovieList from './components/MovieList';
-import { Provider } from 'react-redux';
-
+import { render } from '@testing-library/react';
+import {saveMoviesTrending} from './redux/actions/trendingMovies';
+import trendingMovieReducer from './redux/reducers/trendingMovies';
 import Navbar from './components/Navbar';
-const ReduxProvider = ({ children, reduxStore }) => (
-  <Provider store={reduxStore}>{children}</Provider>
-);
-// test('renders learn react link', () => {
-//   render(<Navbar />);
-//   const linkElement = screen.getByText(
-//     /Movie and TV Show React-Redux Web Application/i,
-//   );
-//   expect(linkElement).toBeInTheDocument();
-// });
 
-// Tests for actions
-describe('dataloader actions', () => {
-  test('dataRequested', () => {
-    const payload = {
-      session: { sessionId: 'sid' },
-    };
-    const action = dataLoaderActions.requestData(payload);
-    expect(action).toEqual({
-      payload: payload,
-      type: 'DATA_LOADER/REQUEST_DATA',
+// Action generating function testing
+describe('saveMoviesTrending', () => {
+  describe('actions', () => {
+    it('should create actions', () => {
+      const action = saveMoviesTrending();
+      console.log(action)
+      expect(action).toEqual({
+        type: 'GET_MOVIES_TRENDING_REQUESTED',
+      });
     });
   });
-
-  test('set loading', () => {
-    const payload = 'drid';
-    const action = dataLoaderActions.setDataLoading(payload);
-    expect(action).toEqual({
-      payload: payload,
-      type: 'DATA_LOADER/SET_DATA_LOADING',
+  describe('reducer', () => {
+    it('should return inital state when passing empty array', () => {
+      let state = trendingMovieReducer(undefined, {})
+      expect(state).toEqual({
+        results: [],
+        loading: false,
+        error: null
+      });
     });
   });
-
   // ...and so on...
+});
+
+//Component Testing
+describe('<Navbar />', () => {
+  it('should render succesfully', () => {
+    const nav = render(<Navbar />);
+    expect(nav).toBeTruthy()
+  });
 });

@@ -2,8 +2,6 @@ import axiosInstance from '../../middleware/axios';
 import { call, put, takeEvery, delay } from 'redux-saga/effects';
 
 function getTrendingMovies() {
-  // console.log('here');
-  // console.log(axiosInstance);
   return axiosInstance
     .get(`/trending/movie/week?`)
     .then((res) => {

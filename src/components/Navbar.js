@@ -4,8 +4,9 @@ function Navbar() {
   return (
     <div className="navbar">
       <h1 className="heading-1">
-        Movie and TV Show React-Redux Web Application
+        React-Redux Web App
       </h1>
+      {/* <span>Toggle</span> */}
     </div>
   );
 }

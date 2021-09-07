@@ -11,7 +11,7 @@ function getSearchData(value) {
           : parmsValues[0] === 'movie'
           ? 'movie'
           : 'multi'
-      }? page=1&query=${parmsValues[1]}`,
+      }?page=1&query=${parmsValues[1]}`,
     )
     .then((res) => {
       return res.data;

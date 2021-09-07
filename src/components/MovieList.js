@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { saveMoviesTrending } from '../redux/actions/trendingMovies';
 import { saveSearchData } from '../redux/actions/searchData';
 import Card from './Card';
+
 function MovieList() {
   const dispatch = useDispatch();
   const results = useSelector((state) => state.trendingMovieReducer.results);
@@ -52,7 +53,7 @@ function MovieList() {
   }
   useEffect(() => {
     dispatch(saveMoviesTrending());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     setContents(results);
@@ -63,10 +64,12 @@ function MovieList() {
       setContents(searchData);
     }
   }, [searchData]);
-  if (loading || searchloading) return <div>Loading</div>;
-  if (error || searcherror) return <div>Error</div>;
+  if (loading || searchloading) return <div className="center-screen">⌛ Loading</div>;
+  if (error || searcherror) return <div className="center-screen">⚠️ Error</div>;
   return (
-    <div className="container">
+    <>
+    <div className="nav-search">
+      <div className="container">
       <input
         type="text"
         placeholder="Select movie, tv, or all"
@@ -84,9 +87,12 @@ function MovieList() {
       <button className="search-btn" onClick={handleDataChange}>
         Search
       </button>
+      </div>
+      </div>
 
+      <div className="container">
       <div className="dropdown">
-        <button className="dropbtn">Sorting</button>
+        <button className="dropbtn">Sort by name ▼</button>
         <div className="dropdown-content">
           <p className="dropdown-item" onClick={sortAlpha}>
             Title Ascending
@@ -96,17 +102,19 @@ function MovieList() {
           </p>
         </div>
       </div>
-
       <div className="row">
+        <div>
         {contents &&
           contents.length > 0 &&
           contents.map((item, index) => (
-            <div key={index} className="col-4">
+            <div key={index} className="col">
               <Card movie={item} />
             </div>
           ))}
       </div>
+      </div>
     </div>
+    </>
   );
 }
 
